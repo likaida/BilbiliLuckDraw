@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 基本色值 -->
+    <color name="app_color">#00BCD4</color>
+
+
+    <color name="transparent_background">#00000000</color>
+    <color name="app_background">#fff</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!--  全局通用色值 -->
+    <color name="primary_text_green">#00bc7e</color>
+    <color name="primary_green">#00704b</color>
+    <color name="primary_light_green">#00cd90</color>
+    <color name="primary_light_green_30">#4c00cd90</color>
+    <color name="yellow">#ff5102</color>
+    <color name="my_orange">#FF6A00</color>
+    <!--使用Theme.AppCompat主题相关,主题色-->
+    <color name="colorAccent">#E4684C</color>
+    <color name="app_titlebar">#d7d7d7</color>
+    <color name="describe_text_night">#585858</color>
+    <color name="describe_text">#b0b6b4</color>
+    <color name="title_text">#2e3130</color>
+    <!-- 日间夜间模式基本色值 -->
+    <color name="primary_text">#333333</color>
+
+    <color name="toast_default_text_color">#FFFFFF</color>
+    <color name="toast_error_color">#D50000</color>
+    <color name="toast_info_color">#3F51B5</color>
+    <color name="toast_success_color">#388E3C</color>
+    <color name="toast_warning_color">#FFA900</color>
+    <color name="toast_normal_color">#353A3E</color>
+    <color name="default_shadow">#26000000</color>
+
+    <color name="color_222">#222222</color>
+    <color name="color_black_alpha_5">#0D000000</color>
+
+
+    <!--透明色值对应ps中alpha通道的值-->
+    <color name="color_000000_alpha0">#00000000</color>
+    <color name="color_ffffff">#ffffff</color>
+    <color name="color_ffffff_alpha98">#FAFFFFFF</color>
+    <color name="color_ffffff_alpha90">#e5ffffff</color>
+    <color name="color_ffffff_alpha80">#ccffffff</color>
+    <color name="color_ffffff_alpha50">#7fffffff</color>
+    <color name="color_ffffff_alpha45">#72ffffff</color>
+    <color name="color_ffffff_alpha60">#99ffffff</color>
+    <color name="color_ffffff_alpha30">#4Dffffff</color>
+    <color name="color_ffffff_alpha20">#33ffffff</color>
+    <color name="color_ffffff_alpha10">#1Affffff</color>
+    <color name="color_ffffff_alpha6">#0FFFFFFF</color>
+
+
+    <color name="color_000000">#000000</color>
+    <color name="color_000000_alpha5">#0D000000</color>
+    <color name="color_000000_alpha4">#0A000000</color>
+    <color name="color_000000_alpha3">#08000000</color>
+    <color name="color_000000_alpha8">#14000000</color>
+    <color name="color_000000_alpha10">#1A000000</color>
+    <color name="color_000000_alpha15">#26000000</color>
+    <color name="color_000000_alpha20">#32000000</color>
+    <color name="color_000000_alpha30">#4D000000</color>
+    <color name="color_000000_alpha40">#66000000</color>
+    <color name="color_000000_alpha50">#80000000</color>
+    <color name="color_000000_alpha60">#99000000</color>
+    <color name="color_000000_alpha80">#cc000000</color>
+    <color name="color_000000_alpha70">#b3000000</color>
+    <color name="color_000000_alpha90">#e6000000</color>
+</resources>

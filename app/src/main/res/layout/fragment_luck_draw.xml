@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/mUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="140dp"
+                android:text="UserName"
+                android:textColor="@color/color_222"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                tools:ignore="SpUsage" />
+
+            <LinearLayout
+                android:id="@+id/mContentView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/mUserName"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="@dimen/screen_margin_left_right"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="@dimen/screen_margin_left_right"
+                android:background="@drawable/shape_tv_bg"
+                android:elevation="3dp"
+                android:orientation="vertical"
+                android:padding="5dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/mContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Content"
+                    android:textColor="@color/color_222"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/mCreateTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="CreateTime"
+                    android:textColor="@color/color_000000_alpha60"
+                    android:textSize="12dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/mStartLuck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/shape_tv_bg"
+                android:elevation="10dp"
+                android:padding="10dp"
+                android:text="Start"
+                android:textColor="@color/color_222" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

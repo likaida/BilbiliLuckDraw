@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="icon_padding">8dp</dimen>
+
+    <dimen name="screen_margin_left_right">16dp</dimen>
+
+    <dimen name="screen_margin_top_bottom">16dp</dimen>
+
+    <dimen name="widget_margin">32dp</dimen>
+
+    <dimen name="elevation">8dp</dimen>
+
+
+</resources>

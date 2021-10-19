@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+
+<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary_green</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/app_titlebar</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="colorAccent">#3300cd90</item>
+        <item name="android:textColorPrimary">@color/primary_text</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowBackground">@color/app_background</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 强制禁用深色模式-->
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+    </style>
+
+    <style name="Transparent" parent="AppTheme">
+        <item name="android:windowBackground">@color/transparent_background</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+</resources>
