@@ -12,6 +12,7 @@ import com.aceli.bilibililuckdraw.fragment.LuckDrawFragment
 import com.aceli.bilibililuckdraw.fragment.SimplePagerAdapter
 import com.aceli.bilibililuckdraw.util.Utils
 import com.aceli.bilibililuckdraw.databinding.ActivityMainBinding
+import com.aceli.bilibililuckdraw.fragment.SettingFragment
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import com.gyf.immersionbar.ImmersionBar
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         mLuckDrawFragment = LuckDrawFragment()
         mFragments.add(LuckDrawFragment())
         mFragments.add(DataManagerFragment())
-        mFragments.add(LuckDrawFragment())
+        mFragments.add(SettingFragment())
         mPagerAdapter = SimplePagerAdapter(
             supportFragmentManager,
             mFragments,

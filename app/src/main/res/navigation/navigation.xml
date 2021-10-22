@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/fistFragment">
+
+    <fragment
+        android:id="@+id/fistFragment"
+        android:name="com.aceli.bilibililuckdraw.fragment.test.FirstFragment"
+        android:label="FirstFragment"
+        tools:layout="@layout/fragment_first">
+        <action
+            android:id="@+id/action_firstFragment_to_blankFragment"
+            app:destination="@id/secondFragment" />
+        <argument
+            android:name="backUp"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/secondFragment"
+        android:name="com.aceli.bilibililuckdraw.fragment.test.SecondFragment"
+        android:label="BlankFragment"
+        tools:layout="@layout/fragment_second">
+        <action
+            android:id="@+id/action_secondFragment_to_thirdFragment"
+            app:destination="@id/thirdFragment" />
+        <argument
+            android:name="posSecond"
+            app:argType="string" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/thirdFragment"
+        android:name="com.aceli.bilibililuckdraw.fragment.test.ThirdFragment"
+        android:label="ThirdFragment"
+        tools:layout="@layout/fragment_third">
+        <action
+            android:id="@+id/action_thirdFragment_to_firstFragment"
+            app:destination="@id/fistFragment"
+            app:popUpTo="@id/fistFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="posThird"
+            app:argType="string" />
+    </fragment>
+</navigation>
