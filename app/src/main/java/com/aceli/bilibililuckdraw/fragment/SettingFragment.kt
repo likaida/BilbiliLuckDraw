@@ -52,7 +52,7 @@ class SettingFragment : Fragment() {
     }
 
     private fun initListener() {
-        binding.mStartLuck.setOnClickListener {
+        binding.mJumpTesting.setOnClickListener {
             TestActivity.start(mActivity)
         }
     }

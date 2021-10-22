@@ -19,12 +19,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:layout_marginStart="@dimen/screen_margin_left_right"
                 android:layout_marginTop="140dp"
-                android:text="UserName"
+                android:layout_marginEnd="@dimen/screen_margin_left_right"
                 android:textColor="@color/color_222"
-                android:textSize="16dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
-                tools:ignore="SpUsage" />
+                tools:ignore="SpUsage"
+                tools:text="UserName" />
 
             <LinearLayout
                 android:id="@+id/mContentView"
@@ -63,12 +65,15 @@
                 android:id="@+id/mStartLuck"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="200dp"
                 android:background="@drawable/shape_tv_bg"
                 android:elevation="10dp"
                 android:padding="10dp"
-                android:text="Start"
-                android:textColor="@color/color_222" />
+                android:text="Lucky Dog"
+                android:textColor="@color/color_222"
+                android:textSize="30dp" />
         </RelativeLayout>
 
     </LinearLayout>

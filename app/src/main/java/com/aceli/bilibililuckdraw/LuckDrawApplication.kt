@@ -4,12 +4,13 @@ import android.app.Application
 import android.view.Gravity
 import com.aceli.bilibililuckdraw.widget.toasty.Toasty
 import com.facebook.drawee.backends.pipeline.Fresco
+import timber.log.Timber
 
 class LuckDrawApplication : Application() {
     companion object {
-        lateinit var mApp: com.aceli.bilibililuckdraw.LuckDrawApplication
+        lateinit var mApp: LuckDrawApplication
 
-        fun getApplicationObject(): com.aceli.bilibililuckdraw.LuckDrawApplication {
+        fun getApplicationObject(): LuckDrawApplication {
             return mApp
         }
     }
@@ -17,8 +18,7 @@ class LuckDrawApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         mApp = this
-        AppContext.isDebug =
-            com.aceli.bilibililuckdraw.BuildConfig.DEBUG
+        AppContext.isDebug = BuildConfig.DEBUG
         AppContext.init(this)
         init()
     }
@@ -26,10 +26,11 @@ class LuckDrawApplication : Application() {
     private fun init() {
         initToasty()
         Fresco.initialize(this)
+        Timber.plant(Timber.DebugTree())
     }
 
     private fun initToasty() {
-        com.aceli.bilibililuckdraw.widget.toasty.Toasty.Config.getInstance()
+        Toasty.Config.getInstance()
             .setTextSize(14)
             .allowQueue(false) // 是否排队显示
             .setGravity(Gravity.CENTER)

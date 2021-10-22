@@ -1,4 +1,4 @@
-package com.aceli.bilibililuckdraw.fragment
+package com.aceli.bilibililuckdraw.fragment.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

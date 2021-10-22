@@ -11,7 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.aceli.bilibililuckdraw.bean.CommentBean
+import com.aceli.bilibililuckdraw.bean.beans.CommentBean
 import com.aceli.bilibililuckdraw.helper.CommentDataHelper
 import com.aceli.bilibililuckdraw.util.Utils
 import com.aceli.bilibililuckdraw.R

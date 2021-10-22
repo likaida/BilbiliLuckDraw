@@ -9,7 +9,7 @@ import com.aceli.bilibililuckdraw.R
 import com.aceli.bilibililuckdraw.bean.TabEntity
 import com.aceli.bilibililuckdraw.fragment.DataManagerFragment
 import com.aceli.bilibililuckdraw.fragment.LuckDrawFragment
-import com.aceli.bilibililuckdraw.fragment.SimplePagerAdapter
+import com.aceli.bilibililuckdraw.fragment.adapter.SimplePagerAdapter
 import com.aceli.bilibililuckdraw.util.Utils
 import com.aceli.bilibililuckdraw.databinding.ActivityMainBinding
 import com.aceli.bilibililuckdraw.fragment.SettingFragment

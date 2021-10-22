@@ -1,7 +1,7 @@
 package com.aceli.bilibililuckdraw.helper
 
-import com.aceli.bilibililuckdraw.bean.CommentBean
-import com.aceli.bilibililuckdraw.bean.CommentsBean
+import com.aceli.bilibililuckdraw.bean.beans.CommentBean
+import com.aceli.bilibililuckdraw.bean.beans.CommentsBean
 
 
 object CommentDataHelper {

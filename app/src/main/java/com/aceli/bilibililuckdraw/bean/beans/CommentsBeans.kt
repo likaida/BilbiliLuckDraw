@@ -1,4 +1,4 @@
-package com.aceli.bilibililuckdraw.bean
+package com.aceli.bilibililuckdraw.bean.beans
 
 data class CommentsBean(
     var commentList: ArrayList<CommentBean>? = null
