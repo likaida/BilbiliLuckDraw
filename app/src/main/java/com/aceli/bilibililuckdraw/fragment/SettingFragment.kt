@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.aceli.bilibililuckdraw.R
 import com.aceli.bilibililuckdraw.activity.TestActivity
+import com.aceli.bilibililuckdraw.activity.TestViewModelActivity
 import com.aceli.bilibililuckdraw.bean.UserBean
 import com.aceli.bilibililuckdraw.databinding.FragmentSettingBinding
 import com.gyf.immersionbar.ImmersionBar
@@ -54,6 +55,9 @@ class SettingFragment : Fragment() {
     private fun initListener() {
         binding.mJumpTesting.setOnClickListener {
             TestActivity.start(mActivity)
+        }
+        binding.mJumpViewModel.setOnClickListener {
+            TestViewModelActivity.start(mActivity)
         }
     }
 
