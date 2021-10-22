@@ -13,8 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BilibiliLuckDraw">
-        <activity android:name=".activity.TestActivity"></activity>
-        <activity android:name=".activity.TestViewModelActivity"></activity>
+        <activity android:name=".activity.TestActivity" />
+        <activity android:name=".activity.TestViewModelActivity" />
+        <activity android:name=".activity.TestAddWordActivity" />
         <activity
             android:name=".activity.MainActivity"
             android:exported="true"

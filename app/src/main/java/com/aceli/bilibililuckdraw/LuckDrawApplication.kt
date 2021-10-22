@@ -2,11 +2,22 @@ package com.aceli.bilibililuckdraw
 
 import android.app.Application
 import android.view.Gravity
+import com.aceli.bilibililuckdraw.database.AceRepository
+import com.aceli.bilibililuckdraw.database.AceRoomDatabase
 import com.aceli.bilibililuckdraw.widget.toasty.Toasty
 import com.facebook.drawee.backends.pipeline.Fresco
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import timber.log.Timber
 
 class LuckDrawApplication : Application() {
+    // No need to cancel this scope as it'll be torn down with the process
+    val applicationScope = CoroutineScope(SupervisorJob())
+    // Using by lazy so the database and the repository are only created when they're needed
+    // rather than when the application starts
+    val database by lazy { AceRoomDatabase.getDatabase(this, applicationScope) }
+    val repository by lazy { AceRepository(database.wordDao()) }
+
     companion object {
         lateinit var mApp: LuckDrawApplication
 
