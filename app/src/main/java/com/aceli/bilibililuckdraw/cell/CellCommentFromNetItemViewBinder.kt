@@ -10,13 +10,14 @@ import com.aceli.bilibililuckdraw.R
 import com.aceli.bilibililuckdraw.bean.beans.CommentBean
 import com.aceli.bilibililuckdraw.util.Utils
 import com.aceli.bilibililuckdraw.widget.multitype.ItemViewBinder
+import com.facebook.drawee.view.SimpleDraweeView
 
 class CellCommentFromNetItemViewBinder :
     ItemViewBinder<CommentBean, CellCommentFromNetItemViewBinder.ViewHolder>() {
 
     override fun onViewAttachedToWindow(holder: ViewHolder) {
         super.onViewAttachedToWindow(holder)
-        val lp: ViewGroup.LayoutParams = holder.itemView.layoutParams;
+        val lp: ViewGroup.LayoutParams = holder.itemView.layoutParams
         if (lp is StaggeredGridLayoutManager.LayoutParams) {
             val p: StaggeredGridLayoutManager.LayoutParams = lp
             p.isFullSpan = true
@@ -41,7 +42,7 @@ class CellCommentFromNetItemViewBinder :
             data.ctime?.let {
                 holder.mCreateTime.text = Utils.convertTimeStampForCreateTime(it * 1000)
             }
-
+            holder.mUserIcon.setImageURI(data.member?.avatar)
         }
     }
 
@@ -49,5 +50,6 @@ class CellCommentFromNetItemViewBinder :
         var mUserName: TextView = itemView.findViewById(R.id.mUserName)
         var mContent: TextView = itemView.findViewById(R.id.mContent)
         var mCreateTime: TextView = itemView.findViewById(R.id.mCreateTime)
+        var mUserIcon: SimpleDraweeView = itemView.findViewById(R.id.mUserIcon)
     }
 }

@@ -2,6 +2,7 @@ package com.aceli.bilibililuckdraw.fragment
 
 import android.app.Activity
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -51,7 +52,7 @@ class LuckDrawFragment : Fragment() {
     }
 
     private fun initView() {
-
+        binding.mIcon.setImageURI("https://img1.baidu.com/it/u=3122136587,3938996930&fm=26&fmt=auto")
     }
 
     private fun initListener() {

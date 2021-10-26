@@ -12,7 +12,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BilibiliLuckDraw">
+        android:theme="@style/Theme.BilibiliLuckDraw"
+        android:usesCleartextTraffic="true">
         <activity android:name=".activity.TestActivity" />
         <activity android:name=".activity.TestViewModelActivity" />
         <activity android:name=".activity.TestAddWordActivity" />

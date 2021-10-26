@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.aceli.bilibililuckdraw.LuckDrawApplication
 import com.aceli.bilibililuckdraw.R
 import com.aceli.bilibililuckdraw.activity.TestAddWordActivity
-import com.aceli.bilibililuckdraw.cell.CellCommentFromNetItemViewBinder
 import com.aceli.bilibililuckdraw.cell.CellWordItemViewBinder
 import com.aceli.bilibililuckdraw.database.entity.WordEntity
 import com.aceli.bilibililuckdraw.databinding.FragmentViewModelBinding
@@ -32,7 +30,7 @@ class TestViewModelFragment : Fragment() {
     private var mAdapter: MultiTypeAdapter? = MultiTypeAdapter()
     private lateinit var mActivity: Activity
 
-    val jumpAddWord=registerForActivityResult(
+    private val jumpAddWord = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
         val stringExtra = it.data?.getStringExtra(TestAddWordActivity.EXTRA_REPLY)
@@ -95,10 +93,6 @@ class TestViewModelFragment : Fragment() {
 
     private fun initListener() {
         binding.fab.setOnClickListener {
-//            val intent = Intent(mActivity, TestAddWordActivity::class.java)
-//            mActivity.startActivityForResult(intent, -1)
-//            //kotlin写法
-//            return@setOnClickListener
             jumpAddWord.launch(Intent(mActivity, TestAddWordActivity::class.java))
         }
     }

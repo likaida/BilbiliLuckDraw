@@ -74,6 +74,13 @@
                 android:text="Lucky Dog"
                 android:textColor="@color/color_222"
                 android:textSize="30dp" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/mIcon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
         </RelativeLayout>
 
     </LinearLayout>
