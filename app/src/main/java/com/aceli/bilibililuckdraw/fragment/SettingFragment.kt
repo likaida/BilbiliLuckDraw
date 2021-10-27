@@ -11,9 +11,14 @@ import androidx.fragment.app.Fragment
 import com.aceli.bilibililuckdraw.R
 import com.aceli.bilibililuckdraw.activity.TestActivity
 import com.aceli.bilibililuckdraw.activity.TestViewModelActivity
+import com.aceli.bilibililuckdraw.bean.VideoInfoBean
 import com.aceli.bilibililuckdraw.bean.UserBean
 import com.aceli.bilibililuckdraw.databinding.FragmentSettingBinding
+import com.aceli.bilibililuckdraw.widget.toasty.Toasty
+import com.chaquo.python.PyObject
+import com.chaquo.python.Python
 import com.gyf.immersionbar.ImmersionBar
+import timber.log.Timber
 
 class SettingFragment : Fragment() {
     private lateinit var binding: FragmentSettingBinding
@@ -58,6 +63,17 @@ class SettingFragment : Fragment() {
         }
         binding.mJumpViewModel.setOnClickListener {
             TestViewModelActivity.start(mActivity)
+        }
+        binding.mClickPython.setOnClickListener {
+            val py: Python = Python.getInstance()
+            py.getModule("GetVideoInfo").callAttr("init", "BV1vQ4y1D7KJ")
+            val pyObjectVideoInfo: PyObject = py.getModule("GetVideoInfo").callAttr("getAid")
+            val info: VideoInfoBean = pyObjectVideoInfo.toJava(
+                VideoInfoBean::class.java
+            )
+            val aid = info.videoId
+            Toasty.show(aid.toString())
+            Timber.d("python_likaida:aid->$aid")
         }
     }
 

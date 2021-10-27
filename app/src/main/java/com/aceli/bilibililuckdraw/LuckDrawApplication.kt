@@ -5,10 +5,13 @@ import android.view.Gravity
 import com.aceli.bilibililuckdraw.database.AceRepository
 import com.aceli.bilibililuckdraw.database.AceRoomDatabase
 import com.aceli.bilibililuckdraw.widget.toasty.Toasty
+import com.chaquo.python.Python
+import com.chaquo.python.android.AndroidPlatform
 import com.facebook.drawee.backends.pipeline.Fresco
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import timber.log.Timber
+
 
 class LuckDrawApplication : Application() {
     // No need to cancel this scope as it'll be torn down with the process
@@ -38,6 +41,14 @@ class LuckDrawApplication : Application() {
         initToasty()
         Fresco.initialize(this)
         Timber.plant(Timber.DebugTree())
+        initPython()
+    }
+
+    // 初始化python
+    private fun initPython() {
+        if (!Python.isStarted()) {
+            Python.start(AndroidPlatform(this))
+        }
     }
 
     private fun initToasty() {

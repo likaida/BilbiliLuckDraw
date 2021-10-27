@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
     id 'kotlin-android-extensions'
+    id 'com.chaquo.python'
 }
 
 android {
@@ -15,6 +16,20 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+        python {
+            // 指定python路径
+            buildPython "/usr/local/bin/python3.9"
+            // 安装python库
+            pip {
+                install "numpy"
+                install "brotli"
+                install "yarl"
+                install "bilibili-api"
+            }
+        }
     }
 
     buildTypes {
@@ -24,21 +39,15 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility "1.8"
+        targetCompatibility "1.8"
     }
 
     packagingOptions {
         pickFirst "**/libc++_shared.so"
     }
-    splits {
-        abi {
-            enable true
-            reset()
-            include 'x86', 'x86_64', 'arm64-v8a', 'armeabi-v7a'
-            universalApk false
-        }
-    }
+
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
@@ -51,48 +60,37 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.6.0'
-
     // Room components
     implementation "androidx.room:room-ktx:2.3.0"
     kapt "androidx.room:room-compiler:2.3.0"
     androidTestImplementation "androidx.room:room-testing:2.3.0"
-
     // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
     implementation "androidx.lifecycle:lifecycle-common-java8:2.3.1"
-
     // Kotlin components
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"
-
     // UI
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
-
     //navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
-
     //log
     implementation 'com.jakewharton.timber:timber:4.7.1'
-
     // immersionbar
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
     implementation 'com.gyf.immersionbar:immersionbar-components:3.0.0'
     implementation 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
-
     //tablayout
     implementation 'io.github.h07000223:flycoTabLayout:3.0.0'
     //gson
     implementation 'com.google.code.gson:gson:2.8.8'
-
+    //loading
     implementation 'com.victor:lib:1.0.4'
-
+    //image
     implementation 'com.facebook.fresco:fresco:2.6.0'
 
-    implementation 'com.github.bumptech.glide:glide:4.10.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 }
