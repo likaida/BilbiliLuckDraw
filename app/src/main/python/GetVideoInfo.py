@@ -1,11 +1,12 @@
 import asyncio
 from bilibili_api import video
 from java import jclass
+import json
+
 
 class VideoInfo:
-    JavaBean = jclass("com.aceli.bilibililuckdraw.bean.VideoInfoBean")
-    info = JavaBean()
-    aid=0
+    JavaBean = jclass("com.aceli.bilibililuckdraw.bean.JsonBean")
+    infoJson = JavaBean()
 
 
 # "BV1vQ4y1D7KJ"
@@ -15,11 +16,11 @@ async def getAudioInfo(parameter):
     # 获取信息
     info = await v.get_info()
     # 打印信息
-    VideoInfo.info.setVideoId(info.get("aid"))
+    VideoInfo.infoJson.setJsonData(json.dumps(info))
 
 
-def getAid():
-    return VideoInfo.info
+def getJson():
+    return VideoInfo.infoJson
 
 
 def init(parameter):

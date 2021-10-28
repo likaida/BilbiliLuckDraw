@@ -11,14 +11,18 @@ import androidx.fragment.app.Fragment
 import com.aceli.bilibililuckdraw.R
 import com.aceli.bilibililuckdraw.activity.TestActivity
 import com.aceli.bilibililuckdraw.activity.TestViewModelActivity
-import com.aceli.bilibililuckdraw.bean.VideoInfoBean
+import com.aceli.bilibililuckdraw.bean.JsonBean
 import com.aceli.bilibililuckdraw.bean.UserBean
+import com.aceli.bilibililuckdraw.bean.VideoInfoBean
 import com.aceli.bilibililuckdraw.databinding.FragmentSettingBinding
 import com.aceli.bilibililuckdraw.widget.toasty.Toasty
 import com.chaquo.python.PyObject
 import com.chaquo.python.Python
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.gyf.immersionbar.ImmersionBar
 import timber.log.Timber
+import java.lang.Exception
 
 class SettingFragment : Fragment() {
     private lateinit var binding: FragmentSettingBinding
@@ -67,12 +71,23 @@ class SettingFragment : Fragment() {
         binding.mClickPython.setOnClickListener {
             val py: Python = Python.getInstance()
             py.getModule("GetVideoInfo").callAttr("init", "BV1vQ4y1D7KJ")
-            val pyObjectVideoInfo: PyObject = py.getModule("GetVideoInfo").callAttr("getAid")
-            val info: VideoInfoBean = pyObjectVideoInfo.toJava(
-                VideoInfoBean::class.java
+            val pyObjectVideoInfo: PyObject = py.getModule("GetVideoInfo").callAttr("getJson")
+            val info: JsonBean = pyObjectVideoInfo.toJava(
+                JsonBean::class.java
             )
-            val aid = info.videoId
-            Toasty.show(aid.toString())
+            val aid = info.jsonData
+            val gson = Gson()
+            var infoBean: VideoInfoBean? = null
+            try {
+                infoBean = gson.fromJson(
+                    info.jsonData,
+                    object : TypeToken<VideoInfoBean>() {}.type
+                ) as VideoInfoBean
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            Toasty.show(infoBean?.aid?.toString() ?: "")
             Timber.d("python_likaida:aid->$aid")
         }
     }
