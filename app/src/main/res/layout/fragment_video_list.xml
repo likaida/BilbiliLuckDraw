@@ -20,7 +20,8 @@
             android:layout_height="50dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_margin="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="130dp"
             android:background="@drawable/shape_rect_100_ffffff"
             android:elevation="5dp"
             android:gravity="center"
@@ -29,5 +30,32 @@
             android:textSize="14dp"
             android:textStyle="bold" />
 
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="bottom"
+                android:background="@color/white"
+                android:elevation="6dp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/shape_rect_20_f0f0f0"
+                    android:hint="Input Url Like https://www.B.com/video/X"
+                    android:paddingStart="12dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="10dp"
+                    android:textColor="@color/color_222"
+                    android:textColorHint="@color/color_000000_alpha15"
+                    android:textSize="15dp" />
+            </RelativeLayout>
+        </ScrollView>
     </RelativeLayout>
 </layout>

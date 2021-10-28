@@ -1,6 +1,7 @@
 package com.aceli.bilibililuckdraw.util
 
 import android.content.Context
+import com.aceli.bilibililuckdraw.LuckDrawApplication
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -110,5 +111,9 @@ object Utils {
             e.printStackTrace()
         }
         return ""
+    }
+
+    fun getColor(id: Int): Int {
+        return LuckDrawApplication.mApp.resources.getColor(id)
     }
 }
