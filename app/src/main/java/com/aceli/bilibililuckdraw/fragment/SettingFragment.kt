@@ -17,11 +17,9 @@ import com.aceli.bilibililuckdraw.database.entity.VideoInfoEntity
 import com.aceli.bilibililuckdraw.databinding.FragmentSettingBinding
 import com.aceli.bilibililuckdraw.helper.GsonHelper
 import com.aceli.bilibililuckdraw.helper.VideoDataManager
-import com.aceli.bilibililuckdraw.util.AndroidUtils
 import com.aceli.bilibililuckdraw.widget.toasty.Toasty
 import com.chaquo.python.PyObject
 import com.chaquo.python.Python
-import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.gyf.immersionbar.ImmersionBar
 import timber.log.Timber

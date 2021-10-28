@@ -9,12 +9,12 @@ data class RightsDTO(
      var hd5: Int? = null,
      var noReprint: Int? = null,
      var autoplay: Int? = null,
-     var ugcPay: Int? = null,
-     var isCooperation: Int? = null,
-     var ugcPayPreview: Int? = null,
-     var noBackground: Int? = null,
-     var cleanMode: Int? = null,
-     var isSteinGate: Int? = null,
+     var ugc_pay: Int? = null,
+     var is_cooperation: Int? = null,
+     var ugc_pay_preview: Int? = null,
+     var no_background: Int? = null,
+     var clean_mode: Int? = null,
+     var isstein_gate: Int? = null,
      var is360: Int? = null,
 )
 
@@ -32,25 +32,25 @@ data class StatDTO(
      var favorite: Int? = null,
      var coin: Int? = null,
      var share: Int? = null,
-     var nowRank: Int? = null,
-     var hisRank: Int? = null,
+     var now_rank: Int? = null,
+     var his_rank: Int? = null,
      var like: Int? = null,
      var dislike: Int? = null,
      var evaruation: String? = null,
-     var argueMsg: String? = null
+     var argue_msg: String? = null
 )
 
 data class SubtitleDTO(
-     var allowSubmit: Boolean? = null,
+     var allow_submit: Boolean,
      var list: List<*>? = null
 )
 
 data class UserGarbDTO(
-     var urlImageAniCut: String? = null
+     var url_image_ani_cut: String? = null
 )
 
 data class DescV2DTO(
-     var rawText: String? = null,
+     var raw_text: String? = null,
      var type: Int? = null,
      var bizId: Int? = null
 )
@@ -64,7 +64,7 @@ data class PagesDTO(
      var vid: String? = null,
      var weblink: String? = null,
      var dimension: DimensionDTO? = null,
-     var firstFrame: String? = null
+     var first_frame: String? = null
 )
 
 data class DimensionDTO(

@@ -1,48 +1,58 @@
-package com.aceli.bilibililuckdraw.activity
+package com.aceli.bilibililuckdraw.fragment
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener
+import androidx.viewpager.widget.ViewPager
 import com.aceli.bilibililuckdraw.R
 import com.aceli.bilibililuckdraw.bean.TabEntity
-import com.aceli.bilibililuckdraw.fragment.LuckDrawFragment
+import com.aceli.bilibililuckdraw.databinding.FragmentDataBinding
 import com.aceli.bilibililuckdraw.fragment.adapter.SimplePagerAdapter
-import com.aceli.bilibililuckdraw.util.Utils
-import com.aceli.bilibililuckdraw.databinding.ActivityMainBinding
-import com.aceli.bilibililuckdraw.fragment.DataFragment
-import com.aceli.bilibililuckdraw.fragment.SettingFragment
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
-import com.gyf.immersionbar.ImmersionBar
-import java.util.*
+import java.util.ArrayList
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class DataFragment : Fragment() {
+    private lateinit var binding: FragmentDataBinding
+    private lateinit var mActivity: Activity
     private var mFragments = mutableListOf<Fragment>()
     private var mPagerAdapter: SimplePagerAdapter? = null
-
-    private val mTitles = arrayOf("LuckDraw", "DataManager", "Setting")
+    private val mTitles = arrayOf("Video", "Comment", "Barrage")
     private val mTabEntities = ArrayList<CustomTabEntity>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_data, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initView()
         initListener()
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mActivity = context as Activity
+    }
+
     private fun initView() {
-        ImmersionBar.with(this).statusBarDarkFont(true).init()
-        binding.statusHeight.layoutParams.height = Utils.getStatusBarHeight(this)
-        mFragments.add(LuckDrawFragment())
-        mFragments.add(DataFragment())
-        mFragments.add(SettingFragment())
+        mFragments.add(VideoListFragment())
+        mFragments.add(DataManagerFragment())
+        mFragments.add(VideoListFragment())
         mPagerAdapter = SimplePagerAdapter(
-            supportFragmentManager,
+            childFragmentManager,
             mFragments,
-            arrayOf("LuckDraw", "DataManager", "Setting")
+            mTitles
         )
         binding.viewpager.adapter = mPagerAdapter
 
@@ -60,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onTabReselect(position: Int) {}
         })
-        binding.viewpager.addOnPageChangeListener(object : OnPageChangeListener {
+        binding.viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
@@ -74,5 +84,8 @@ class MainActivity : AppCompatActivity() {
 
             override fun onPageScrollStateChanged(state: Int) {}
         })
+
     }
+
+
 }
