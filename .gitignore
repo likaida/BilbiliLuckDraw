@@ -1,3 +1,8 @@
 .gradle/
 /.idea/
 /.gradle/
+/.gradle/6.7.1/
+/.gradle/buildOutputCleanup/
+/.gradle/checksums/
+/.gradle/configuration-cache/
+/.gradle/vcs-1/
