@@ -4,6 +4,7 @@ import android.app.Application
 import android.view.Gravity
 import com.aceli.bilibililuckdraw.database.AceRepository
 import com.aceli.bilibililuckdraw.database.AceRoomDatabase
+import com.aceli.bilibililuckdraw.util.AndroidUtils
 import com.aceli.bilibililuckdraw.widget.toasty.Toasty
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
@@ -15,15 +16,16 @@ import timber.log.Timber
 
 class LuckDrawApplication : Application() {
     // No need to cancel this scope as it'll be torn down with the process //
-    val applicationScope = CoroutineScope(SupervisorJob())
+
+
     // Using by lazy so the database and the repository are only created when they're needed
     // rather than when the application starts
-    val database by lazy { AceRoomDatabase.getDatabase(this, applicationScope) }
+    val database by lazy { AceRoomDatabase.initDataBase(this, applicationScope) }
     val repository by lazy { AceRepository(database.wordDao()) }
 
     companion object {
         lateinit var mApp: LuckDrawApplication
-
+        val applicationScope = CoroutineScope(SupervisorJob())
         fun getApplicationObject(): LuckDrawApplication {
             return mApp
         }
@@ -42,6 +44,7 @@ class LuckDrawApplication : Application() {
         Fresco.initialize(this)
         Timber.plant(Timber.DebugTree())
         initPython()
+        AndroidUtils.onCreate(this)
     }
 
     // 初始化python

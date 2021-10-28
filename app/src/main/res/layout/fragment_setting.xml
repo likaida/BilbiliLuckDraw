@@ -17,6 +17,7 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
+
         <TextView
             android:id="@+id/mUserName"
             android:layout_width="wrap_content"
@@ -27,6 +28,22 @@
             android:textSize="16dp"
             android:textStyle="bold"
             tools:ignore="SpUsage" />
+
+        <TextView
+            android:id="@+id/mAddVideo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/shape_tv_bg"
+            android:elevation="10dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="AddVideo"
+            android:textColor="@color/color_222"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/mJumpTesting"
@@ -43,6 +60,7 @@
             android:textColor="@color/color_222"
             android:textSize="20dp"
             android:textStyle="bold" />
+
         <TextView
             android:id="@+id/mJumpViewModel"
             android:layout_width="match_parent"
@@ -58,21 +76,7 @@
             android:textColor="@color/color_222"
             android:textSize="20dp"
             android:textStyle="bold" />
-        <TextView
-            android:id="@+id/mClickPython"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="15dp"
-            android:background="@drawable/shape_tv_bg"
-            android:elevation="10dp"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="TestViewModel"
-            android:textColor="@color/color_222"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+
 
     </LinearLayout>
 </layout>

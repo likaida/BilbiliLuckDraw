@@ -1,33 +1,5 @@
 package com.aceli.bilibililuckdraw.bean
 
-data class VideoInfoBean(
-     var bvid: String? = null,
-     var aid: Int? = null,
-     var videos: Int? = null,
-     var tid: Int? = null,
-     var tname: String? = null,
-     var copyright: Int? = null,
-     var pic: String? = null,
-     var title: String? = null,
-     var pubdate: Int? = null,
-     var ctime: Int? = null,
-     var desc: String? = null,
-     var descV2: List<DescV2DTO>? = null,
-     var state: Int? = null,
-     var duration: Int? = null,
-     var missionId: Int? = null,
-     var rights: RightsDTO? = null,
-     var owner: OwnerDTO? = null,
-     var stat: StatDTO? = null,
-     var dynamic: String? = null,
-     var cid: Int? = null,
-     var dimension: DimensionDTO? = null,
-     var noCache: Boolean? = null,
-     var pages: List<PagesDTO>? = null,
-     var subtitle: SubtitleDTO? = null,
-     var userGarb: UserGarbDTO? = null,
-)
-
 data class RightsDTO(
      var bp: Int? = null,
      var elec: Int? = null,

@@ -13,8 +13,11 @@ import com.aceli.bilibililuckdraw.activity.TestActivity
 import com.aceli.bilibililuckdraw.activity.TestViewModelActivity
 import com.aceli.bilibililuckdraw.bean.JsonBean
 import com.aceli.bilibililuckdraw.bean.UserBean
-import com.aceli.bilibililuckdraw.bean.VideoInfoBean
+import com.aceli.bilibililuckdraw.database.entity.VideoInfoEntity
 import com.aceli.bilibililuckdraw.databinding.FragmentSettingBinding
+import com.aceli.bilibililuckdraw.helper.GsonHelper
+import com.aceli.bilibililuckdraw.helper.VideoDataManager
+import com.aceli.bilibililuckdraw.util.AndroidUtils
 import com.aceli.bilibililuckdraw.widget.toasty.Toasty
 import com.chaquo.python.PyObject
 import com.chaquo.python.Python
@@ -68,28 +71,35 @@ class SettingFragment : Fragment() {
         binding.mJumpViewModel.setOnClickListener {
             TestViewModelActivity.start(mActivity)
         }
-        binding.mClickPython.setOnClickListener {
-            val py: Python = Python.getInstance()
-            py.getModule("GetVideoInfo").callAttr("init", "BV1vQ4y1D7KJ")
-            val pyObjectVideoInfo: PyObject = py.getModule("GetVideoInfo").callAttr("getJson")
-            val info: JsonBean = pyObjectVideoInfo.toJava(
-                JsonBean::class.java
-            )
-            val aid = info.jsonData
-            val gson = Gson()
-            var infoBean: VideoInfoBean? = null
-            try {
-                infoBean = gson.fromJson(
-                    info.jsonData,
-                    object : TypeToken<VideoInfoBean>() {}.type
-                ) as VideoInfoBean
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
-            Toasty.show(infoBean?.aid?.toString() ?: "")
-            Timber.d("python_likaida:aid->$aid")
+        binding.mAddVideo.setOnClickListener {
+            addVideo("BV1vQ4y1D7KJ")
         }
+    }
+
+    private fun addVideo(vid: String) {
+        val py: Python = Python.getInstance()
+        py.getModule("GetVideoInfo").callAttr("init", vid)
+        val pyObjectVideoInfo: PyObject = py.getModule("GetVideoInfo").callAttr("getJson")
+        val info: JsonBean = pyObjectVideoInfo.toJava(
+            JsonBean::class.java
+        )
+        val aid = info.jsonData
+        var infoBean: VideoInfoEntity? = null
+        try {
+            infoBean = GsonHelper.instance.gson.fromJson(
+                info.jsonData,
+                object : TypeToken<VideoInfoEntity>() {}.type
+            ) as VideoInfoEntity
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        if (infoBean != null) {
+            VideoDataManager.addVideo(infoBean)
+            Toasty.success(mActivity, "Add Video ${infoBean.title} Success").show()
+        } else {
+            Toasty.error(mActivity, "Add Video $vid error").show()
+        }
+        Timber.d("python_likaida:aid->$aid")
     }
 
 }
