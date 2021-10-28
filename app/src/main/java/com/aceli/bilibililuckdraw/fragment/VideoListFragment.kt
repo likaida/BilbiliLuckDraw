@@ -10,15 +10,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.aceli.bilibililuckdraw.R
 import com.aceli.bilibililuckdraw.databinding.FragmentVideoListBinding
-import com.aceli.bilibililuckdraw.widget.dialog.InputTextMsgDialog
-import com.aceli.bilibililuckdraw.widget.dialog.InputTextMsgDialog.OnTextSendListener
+import com.aceli.bilibililuckdraw.widget.dialog.InputVideoUrlDialog
+import com.aceli.bilibililuckdraw.widget.dialog.InputVideoUrlDialog.OnTextSendListener
 import com.aceli.bilibililuckdraw.widget.toasty.Toasty
 
 
 class VideoListFragment : Fragment() {
     private lateinit var binding: FragmentVideoListBinding
     private lateinit var mActivity: Activity
-    private var mInputDialog: InputTextMsgDialog? = null
+    private var mInputDialog: InputVideoUrlDialog? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,11 +40,12 @@ class VideoListFragment : Fragment() {
     }
 
     private fun initView() {
-        mInputDialog = InputTextMsgDialog(mActivity, R.style.dialog_center)
-        mInputDialog?.setmOnTextSendListener {
-            //点击发送按钮后，回调此方法，msg为输入的值
-            Toasty.show(it)
-        }
+        mInputDialog = InputVideoUrlDialog(mActivity, R.style.dialog_center)
+        mInputDialog?.setOnTextSendListener(object : OnTextSendListener {
+            override fun onTextSend(msg: String?) {
+                Toasty.show(msg ?: "")
+            }
+        })
     }
 
     private fun initListener() {
