@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="13dp"
+    android:layout_marginTop="12dp"
+    android:orientation="vertical">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/mVideoCover"
+        android:layout_width="160dp"
+        android:layout_height="90dp"
+        app:roundedCornerRadius="5dp" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/mVideoCover"
+        android:layout_alignTop="@+id/mVideoCover"
+        android:layout_alignEnd="@+id/mVideoCover"
+        android:layout_alignBottom="@+id/mVideoCover"
+        android:background="@drawable/shape_rect_5_0d000000" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignStart="@+id/mVideoCover"
+        android:layout_alignEnd="@+id/mVideoCover"
+        android:layout_alignBottom="@+id/mVideoCover"
+        android:background="@drawable/shape_rect_bl5_br5_t000000_bb3000000" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/mVideoCover"
+        android:layout_alignEnd="@+id/mVideoCover"
+        android:layout_alignBottom="@+id/mVideoCover"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/mPlayTimesIcon"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:src="@mipmap/ic_rangebar_indicator" />
+
+        <TextView
+            android:id="@+id/mPlayTimes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:textColor="#fff"
+            android:textSize="8dp"
+            tools:text="times" />
+
+        <ImageView
+            android:id="@+id/mLikeIcon"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="3dp"
+            android:src="@mipmap/mall_ic_liked" />
+
+        <TextView
+            android:id="@+id/mLikeNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:textColor="#fff"
+            android:textSize="8dp"
+            tools:text="like" />
+
+        <ImageView
+            android:id="@+id/mCoinIcon"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="3dp"
+            android:src="@mipmap/ic_bangumi_coin_light" />
+
+        <TextView
+            android:id="@+id/mCoinNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:textColor="#fff"
+            android:textSize="8dp"
+            tools:text="coin" />
+
+        <ImageView
+            android:id="@+id/mFavoriteIcon"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="3dp"
+            android:src="@mipmap/ic_collected_star" />
+
+        <TextView
+            android:id="@+id/mFavoriteNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:textColor="#fff"
+            android:textSize="8dp"
+            tools:text="favorite" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/mVideoName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_toEndOf="@+id/mVideoCover"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/color_222"
+        android:textSize="12dp"
+        android:textStyle="bold"
+        tools:ignore="SpUsage"
+        tools:text="Video Name" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mVideoName"
+        android:layout_alignStart="@+id/mVideoName"
+        android:layout_alignEnd="@+id/mVideoName"
+        android:layout_marginTop="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="reply"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</RelativeLayout>

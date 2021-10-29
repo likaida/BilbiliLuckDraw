@@ -31,7 +31,7 @@ class InputVideoUrlDialog(private val mContext: Context, theme: Int) : AppCompat
     private var mTestBtn: TextView? = null
     private var mLastDiff = 0
     private var testUrl =
-        "https://www.bilibili.com/video/BV1PT4y1o7Tr?spm_id_from=333.851.b_7265636f6d6d656e64.2"
+        "https://www.bilibili.com/video/BV11L4y1B7a6?spm_id_from=333.999.0.0"
 
     private fun initView() {
         setContentView(R.layout.dialog_input_video_url)
@@ -56,7 +56,7 @@ class InputVideoUrlDialog(private val mContext: Context, theme: Int) : AppCompat
         })
 
         mEditView?.setOnEditorActionListener { _, _, event ->
-            when (event?.keyCode?:0) {
+            when (event?.keyCode ?: 0) {
                 KeyEvent.KEYCODE_ENDCALL, KeyEvent.KEYCODE_ENTER -> {
                     submit()
                     true
@@ -149,10 +149,28 @@ class InputVideoUrlDialog(private val mContext: Context, theme: Int) : AppCompat
         if (text.isNullOrEmpty()) {
             Toasty.error(mContext, "Please input video url").show()
         } else {
-//            if (text.contains("bilibil")){
-//                text.startsWith("?")
-//            }
+            if (text.contains("bilibil")) {
+                val split = text.split("?")
+                if (split.isNotEmpty()) {
+                    val split1 = split[0].split("/")
+                    if (split1.isNotEmpty()) {
+                        mOnTextSendListener?.onTextSend(split1[split1.size - 1])
+                        mEditView?.setText("")
+                        dismiss()
+                    } else {
+                        showError()
+                    }
+                } else {
+                    showError()
+                }
+            } else {
+                showError()
+            }
         }
+    }
+
+    private fun showError() {
+        Toasty.error(mContext, "Please input correct url").show()
     }
 
     interface OnTextSendListener {

@@ -1,6 +1,9 @@
 package com.aceli.bilibililuckdraw.util
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.drawable.Drawable
+import androidx.core.graphics.drawable.DrawableCompat
 import com.aceli.bilibililuckdraw.LuckDrawApplication
 import java.io.BufferedReader
 import java.io.IOException
@@ -115,5 +118,11 @@ object Utils {
 
     fun getColor(id: Int): Int {
         return LuckDrawApplication.mApp.resources.getColor(id)
+    }
+
+    private fun tintDrawable(drawable: Drawable, colors: ColorStateList): Drawable {
+        val wrappedDrawable = DrawableCompat.wrap(drawable)
+        DrawableCompat.setTintList(wrappedDrawable, colors)
+        return wrappedDrawable
     }
 }
