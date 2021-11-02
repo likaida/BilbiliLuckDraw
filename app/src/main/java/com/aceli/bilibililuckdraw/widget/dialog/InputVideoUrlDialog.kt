@@ -42,7 +42,7 @@ class InputVideoUrlDialog(private val mContext: Context, theme: Int) : AppCompat
         imm = mContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     }
 
-    fun initListener() {
+    private fun initListener() {
         mEditView?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
@@ -154,9 +154,9 @@ class InputVideoUrlDialog(private val mContext: Context, theme: Int) : AppCompat
                 if (split.isNotEmpty()) {
                     val split1 = split[0].split("/")
                     if (split1.isNotEmpty()) {
+                        dismiss()
                         mOnTextSendListener?.onTextSend(split1[split1.size - 1])
                         mEditView?.setText("")
-                        dismiss()
                     } else {
                         showError()
                     }

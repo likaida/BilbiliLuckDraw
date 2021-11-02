@@ -46,7 +46,7 @@
             android:id="@+id/mPlayTimesIcon"
             android:layout_width="10dp"
             android:layout_height="10dp"
-            android:src="@mipmap/ic_rangebar_indicator" />
+            android:src="@mipmap/ic_video_read" />
 
         <TextView
             android:id="@+id/mPlayTimes"
@@ -62,7 +62,7 @@
             android:layout_width="10dp"
             android:layout_height="10dp"
             android:layout_marginStart="3dp"
-            android:src="@mipmap/mall_ic_liked" />
+            android:src="@mipmap/ic_video_like" />
 
         <TextView
             android:id="@+id/mLikeNum"
@@ -78,7 +78,7 @@
             android:layout_width="10dp"
             android:layout_height="10dp"
             android:layout_marginStart="3dp"
-            android:src="@mipmap/ic_bangumi_coin_light" />
+            android:src="@mipmap/ic_video_coin" />
 
         <TextView
             android:id="@+id/mCoinNum"
@@ -94,7 +94,7 @@
             android:layout_width="10dp"
             android:layout_height="10dp"
             android:layout_marginStart="3dp"
-            android:src="@mipmap/ic_collected_star" />
+            android:src="@mipmap/ic_video_favorite" />
 
         <TextView
             android:id="@+id/mFavoriteNum"
@@ -123,15 +123,53 @@
         tools:text="Video Name" />
 
     <LinearLayout
+        android:id="@+id/mExtInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/mVideoName"
         android:layout_alignStart="@+id/mVideoName"
         android:layout_alignEnd="@+id/mVideoName"
         android:layout_marginTop="5dp">
+
         <TextView
+            android:id="@+id/mReplyNum"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="reply"
-            android:layout_height="wrap_content"/>
+            android:textColor="@color/color_000000_alpha50"
+            android:textSize="10dp" />
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/mExtInfo"
+        android:layout_alignEnd="@+id/mExtInfo"
+        android:layout_alignBottom="@+id/mVideoCover">
+
+        <TextView
+            android:id="@+id/mUpdateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="UpdateTime"
+            android:textColor="@color/color_000000_alpha50"
+            android:textSize="10dp" />
+
+        <ImageView
+            android:id="@+id/mVideoDelete"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="20dp"
+            android:layout_toStartOf="@+id/mVideoRefresh"
+            android:src="@mipmap/ic_delete" />
+
+        <ImageView
+            android:id="@+id/mVideoRefresh"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentEnd="true"
+            android:src="@mipmap/ic_video_refresh" />
+    </RelativeLayout>
+
 </RelativeLayout>

@@ -10,16 +10,21 @@ import com.chaquo.python.Python
 import com.google.gson.reflect.TypeToken
 import timber.log.Timber
 import java.lang.Exception
+import java.util.*
 
 object VideoDataManager {
     fun addVideo(videoInfo: VideoInfoEntity) {
-        LuckDrawApplication.mApp
         val videoDatabase = AceRoomDatabase.getDataBase()?.videoInfo()
         if (videoDatabase?.getVideoById(videoInfo.bvid) != null) {
             videoDatabase.updateVideoInfo(videoInfo)
         } else {
             videoDatabase?.insertVideoInfo(videoInfo)
         }
+    }
+
+    fun deleteVideo(vid: String) {
+        val videoDatabase = AceRoomDatabase.getDataBase()?.videoInfo()
+        videoDatabase?.deleteVideoById(vid)
     }
 
     fun getAllVideo(): List<VideoInfoEntity>? {
@@ -44,6 +49,7 @@ object VideoDataManager {
             e.printStackTrace()
         }
         if (infoBean != null) {
+            infoBean.updateTime = Date().time
             addVideo(infoBean)
             callback?.onAddVideoSuccess(infoBean)
             Toasty.success(LuckDrawApplication.mApp, "Add Video ${infoBean.title} Success").show()
@@ -54,8 +60,17 @@ object VideoDataManager {
         Timber.d("python_likaida:aid->$aid")
     }
 
+    fun deleteVideoById(vid: String, callback: OnDeleteVideoCallback? = null) {
+        deleteVideo(vid)
+        callback?.onDeleteVideoSuccess(vid)
+    }
+
     interface OnAddVideoCallback {
         fun onAddVideoSuccess(videoInfo: VideoInfoEntity)
         fun onAddVideoFail()
+    }
+
+    interface OnDeleteVideoCallback {
+        fun onDeleteVideoSuccess(vid: String)
     }
 }

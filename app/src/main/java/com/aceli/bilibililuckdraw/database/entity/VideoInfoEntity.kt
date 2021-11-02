@@ -20,6 +20,7 @@ data class VideoInfoEntity(
     var videos: Int? = null,
     var tid: Int? = null,
     var tname: String? = null,
+    var updateTime: Long? = null,
     var copyright: Int? = null,
     var pic: String? = null,
     var title: String? = null,

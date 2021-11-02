@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aceli.bilibililuckdraw.R
 import com.aceli.bilibililuckdraw.cell.CellVideoInfoItemViewBinder
+import com.aceli.bilibililuckdraw.const.ClickConst
 import com.aceli.bilibililuckdraw.database.entity.VideoInfoEntity
 import com.aceli.bilibililuckdraw.databinding.FragmentVideoListBinding
 import com.aceli.bilibililuckdraw.helper.VideoDataManager
@@ -58,7 +59,7 @@ class VideoListFragment : Fragment(), OnItemMultiClickListener {
         val allVideo = VideoDataManager.getAllVideo()
         allVideo?.let {
             mData?.addAll(it)
-            mAdapter?.notifyDataSetChanged()
+            mAdapter?.notifyItemRangeInserted(0, it.size - 1)
         }
     }
 
@@ -91,11 +92,38 @@ class VideoListFragment : Fragment(), OnItemMultiClickListener {
             }
         }
         mData?.add(videoInfo)
-        mAdapter?.notifyDataSetChanged()
+        mAdapter?.notifyItemInserted(mData?.size ?: 0)
     }
 
     override fun onBaseItemMultiClick(actionType: Int, pos: Int, ext: Any?) {
-        TODO("Not yet implemented")
+        when (actionType) {
+            ClickConst.CLICK_ACTION_VIDEO_REFRESH -> {
+                if (ext is String) {
+                    VideoDataManager.addVideoById(
+                        ext,
+                        object : VideoDataManager.OnAddVideoCallback {
+                            override fun onAddVideoSuccess(videoInfo: VideoInfoEntity) {
+                                refreshOrAddVideo(videoInfo)
+                            }
+
+                            override fun onAddVideoFail() {
+                            }
+                        })
+                }
+            }
+            ClickConst.CLICK_ACTION_VIDEO_DELETE -> {
+                if (ext is String) {
+                    VideoDataManager.deleteVideoById(
+                        ext,
+                        object : VideoDataManager.OnDeleteVideoCallback {
+                            override fun onDeleteVideoSuccess(vid: String) {
+                                mData?.removeAt(pos)
+                                mAdapter?.notifyItemRemoved(pos)
+                            }
+                        })
+                }
+            }
+        }
     }
 
 }
