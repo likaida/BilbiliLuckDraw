@@ -3,7 +3,6 @@ package com.aceli.bilibililuckdraw.fragment
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,15 +10,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.aceli.bilibililuckdraw.bean.beans.CommentBean
 import com.aceli.bilibililuckdraw.helper.CommentDataHelper
-import com.aceli.bilibililuckdraw.util.Utils
 import com.aceli.bilibililuckdraw.R
+import com.aceli.bilibililuckdraw.bean.JsonBean
+import com.aceli.bilibililuckdraw.bean.VideoCommentBean
 import com.aceli.bilibililuckdraw.cell.CellCommentFromNetItemViewBinder
+import com.aceli.bilibililuckdraw.database.entity.VideoInfoEntity
 import com.aceli.bilibililuckdraw.databinding.FragmentDataManagerBinding
+import com.aceli.bilibililuckdraw.helper.GsonHelper
+import com.aceli.bilibililuckdraw.helper.VideoDataManager
 import com.aceli.bilibililuckdraw.widget.multitype.MultiTypeAdapter
 import com.aceli.bilibililuckdraw.widget.toasty.Toasty
-import com.google.gson.Gson
+import com.chaquo.python.PyObject
+import com.chaquo.python.Python
 import com.google.gson.reflect.TypeToken
 import com.gyf.immersionbar.ImmersionBar
 import java.lang.Exception
@@ -30,7 +33,8 @@ class DataManagerFragment : Fragment() {
     private lateinit var mActivity: Activity
     private var mData: MutableList<Any>? = ArrayList()
     private var mAdapter: MultiTypeAdapter? = MultiTypeAdapter()
-
+    var mCnChangeTabListener: OnChangeTabListener? = null
+    private var mVideoList: ArrayList<VideoInfoEntity>? = ArrayList()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -71,39 +75,50 @@ class DataManagerFragment : Fragment() {
         binding.mCreateData.setOnClickListener {
             createData()
         }
-        binding.mInjectData.setOnClickListener {
-            injectData()
-        }
     }
 
     private fun createData() {
-        if (binding.inputVideoId.text.isNullOrEmpty()) {
-            Toasty.show("Please Enter Video ID")
+        binding.mLoading.start()
+        mVideoList = VideoDataManager.getAllVideo() as ArrayList<VideoInfoEntity>?
+        if (mVideoList?.isNullOrEmpty() == true) {
+            Toasty.show("Please Add Video")
+            mCnChangeTabListener?.onChangeTab(0)
             return
         }
-        binding.mLoading.start()
-        val fileName = "comment.json"
-        val json = Utils.getJson(mActivity, fileName)
-        val gson = Gson()
-        var beanList: ArrayList<CommentBean>? = null
+        var idList = ""
+        mVideoList?.forEach { video ->
+            video.aid?.let {
+                idList = if (idList.isEmpty()) {
+                    "$it"
+                } else {
+                    "$idList,$it"
+                }
+            }
+        }
+        val py: Python = Python.getInstance()
+        py.getModule("GetComment").callAttr("init", idList)
+        val pyObjectVideoInfo: PyObject = py.getModule("GetComment").callAttr("getJson")
+        val jsonBean: JsonBean = pyObjectVideoInfo.toJava(
+            JsonBean::class.java
+        )
+        var commentBean: ArrayList<VideoCommentBean>? = null
         try {
-            beanList = gson.fromJson(
-                json,
-                object : TypeToken<ArrayList<CommentBean?>?>() {}.type
-            ) as ArrayList<CommentBean>
+            commentBean = GsonHelper.instance.gson.fromJson(
+                jsonBean.jsonData,
+                object : TypeToken<ArrayList<VideoCommentBean>>() {}.type
+            ) as ArrayList<VideoCommentBean>
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        if (beanList?.isNullOrEmpty() == false) {
-            CommentDataHelper.setData(beanList)
-            Handler().postDelayed({
-                binding.mLoading.stop()
-                Toasty.success(
-                    mActivity,
-                    "Data was create by net"
-                ).show()
-            }, 2000)
-        } else {
+        binding.mLoading.stop()
+        if (!commentBean.isNullOrEmpty()){
+            CommentDataHelper.setData(commentBean)
+            Toasty.success(
+                mActivity,
+                "Data was create by net"
+            ).show()
+            injectData()
+        }else{
             Toasty.error(
                 mActivity,
                 "Data was create error"
@@ -112,14 +127,14 @@ class DataManagerFragment : Fragment() {
     }
 
     private fun injectData() {
-        if (CommentDataHelper.commentsData?.commentList?.isNullOrEmpty() == false) {
+        if (CommentDataHelper.commentsData?.isNullOrEmpty() == false) {
             mData?.clear()
-            CommentDataHelper.commentsData?.commentList?.let {
+            CommentDataHelper.commentsData?.let {
                 mData?.addAll(it)
             }
             binding.mRepeatNum.text = CommentDataHelper.repeatData?.size?.toString() ?: "0"
             binding.mSuccessNum.text =
-                CommentDataHelper.commentsData?.commentList?.size?.toString() ?: "0"
+                CommentDataHelper.commentsData?.size?.toString() ?: "0"
             mAdapter?.notifyDataSetChanged()
         } else {
             Toasty.error(
@@ -128,5 +143,15 @@ class DataManagerFragment : Fragment() {
             ).show()
             return
         }
+    }
+
+    companion object {
+        fun getInstance(): DataManagerFragment {
+            return DataManagerFragment()
+        }
+    }
+
+    interface OnChangeTabListener {
+        fun onChangeTab(pos: Int)
     }
 }

@@ -2,7 +2,6 @@ package com.aceli.bilibililuckdraw.fragment
 
 import android.app.Activity
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
@@ -52,7 +51,7 @@ class LuckDrawFragment : Fragment() {
     }
 
     private fun initView() {
-        binding.mIcon.setImageURI("https://img1.baidu.com/it/u=3122136587,3938996930&fm=26&fmt=auto")
+
     }
 
     private fun initListener() {
@@ -66,7 +65,7 @@ class LuckDrawFragment : Fragment() {
     }
 
     private fun startLuck() {
-        if (CommentDataHelper.commentsData?.commentList?.isNullOrEmpty() == false) {
+        if (CommentDataHelper.commentsData?.isNullOrEmpty() == false) {
             Toasty.info(mActivity, "Come on .....").show()
             binding.mStartLuck.text = "Stop"
             isLooping = true
@@ -77,22 +76,35 @@ class LuckDrawFragment : Fragment() {
     }
 
     private fun startLoop() {
-        val size = CommentDataHelper.commentsData?.commentList?.size ?: 0
+        val size = CommentDataHelper.commentsData?.size ?: 0
         val nextInt = Random.nextInt(size)
-        val get = CommentDataHelper.commentsData?.commentList?.get(nextInt)
+        val get = CommentDataHelper.commentsData?.get(nextInt)
         binding.mContentView.gone()
+        binding.mDrawnNumContent.visible()
         get.let {
             binding.mUserName.text = it?.member?.uname
             binding.mContent.text = it?.content?.message
+            binding.mIcon.setImageURI(it?.member?.avatar)
+            if (it?.member?.sex == "男") {
+                binding.mSex.visible()
+                binding.mSex.setImageResource(R.mipmap.ic_man)
+            } else if (it?.member?.sex == "女") {
+                binding.mSex.visible()
+                binding.mSex.setImageResource(R.mipmap.ic_woman)
+            } else {
+                binding.mSex.gone()
+            }
+            binding.mDrawnNumSize.text = " : $size"
             binding.mCreateTime.text = Utils.convertTimeStampForCreateTime((it?.ctime ?: 0) * 1000)
         }
-        mHandler.postDelayed(mRunnable, 100)
+        mHandler.postDelayed(mRunnable, 50)
     }
 
     private fun stopLoop() {
         binding.mStartLuck.text = "Start"
         mHandler.removeCallbacks(mRunnable)
         binding.mContentView.visible()
+        binding.mDrawnNumContent.gone()
         isLooping = false
     }
 

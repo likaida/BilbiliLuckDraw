@@ -7,13 +7,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.aceli.bilibililuckdraw.R
-import com.aceli.bilibililuckdraw.bean.beans.CommentBean
+import com.aceli.bilibililuckdraw.bean.VideoCommentBean
 import com.aceli.bilibililuckdraw.util.Utils
 import com.aceli.bilibililuckdraw.widget.multitype.ItemViewBinder
 import com.facebook.drawee.view.SimpleDraweeView
 
 class CellCommentFromNetItemViewBinder :
-    ItemViewBinder<CommentBean, CellCommentFromNetItemViewBinder.ViewHolder>() {
+    ItemViewBinder<VideoCommentBean, CellCommentFromNetItemViewBinder.ViewHolder>() {
 
     override fun onViewAttachedToWindow(holder: ViewHolder) {
         super.onViewAttachedToWindow(holder)
@@ -28,7 +28,7 @@ class CellCommentFromNetItemViewBinder :
         return ViewHolder(inflater.inflate(R.layout.cell_comment, parent, false))
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, item: CommentBean) {
+    override fun onBindViewHolder(holder: ViewHolder, item: VideoCommentBean) {
         item.let { data ->
             data.member?.uname?.let {
                 holder.mUserName.text = it

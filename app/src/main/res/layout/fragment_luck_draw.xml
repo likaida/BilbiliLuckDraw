@@ -28,7 +28,7 @@
                 tools:ignore="SpUsage"
                 tools:text="UserName" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/mContentView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -43,10 +43,29 @@
                 android:padding="5dp"
                 android:visibility="gone">
 
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/mIcon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:visibility="visible"
+                    app:roundAsCircle="true" />
+
+                <ImageView
+                    android:id="@+id/mSex"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignTop="@+id/mIcon"
+                    android:layout_alignBottom="@+id/mIcon"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/mIcon"
+                    android:src="@mipmap/ic_man" />
+
                 <TextView
                     android:id="@+id/mContent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/mIcon"
+                    android:layout_marginTop="10dp"
                     android:text="Content"
                     android:textColor="@color/color_222"
                     android:textSize="16dp" />
@@ -55,11 +74,12 @@
                     android:id="@+id/mCreateTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/mContent"
                     android:layout_marginTop="3dp"
                     android:text="CreateTime"
                     android:textColor="@color/color_000000_alpha60"
                     android:textSize="12dp" />
-            </LinearLayout>
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/mStartLuck"
@@ -75,12 +95,33 @@
                 android:textColor="@color/color_222"
                 android:textSize="30dp" />
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/mIcon"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerInParent="true"
-                android:visibility="gone" />
+            <LinearLayout
+                android:id="@+id/mDrawnNumContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/mStartLuck"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-190dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scrollbarSize="25dp"
+                    android:text="1"
+                    android:textColor="@color/toast_error_color"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/mDrawnNumSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scrollbarSize="25dp"
+                    android:text=" : 1000"
+                    android:textColor="@color/color_222"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
         </RelativeLayout>
 
     </LinearLayout>

@@ -1,21 +1,18 @@
 package com.aceli.bilibililuckdraw.helper
 
-import com.aceli.bilibililuckdraw.bean.beans.CommentBean
-import com.aceli.bilibililuckdraw.bean.beans.CommentsBean
+import com.aceli.bilibililuckdraw.bean.VideoCommentBean
 
 
 object CommentDataHelper {
-    var commentsData: CommentsBean? = null
-    var repeatData: ArrayList<CommentBean>? = null
+    var commentsData: ArrayList<VideoCommentBean>? = null
+    var repeatData: ArrayList<VideoCommentBean>? = null
     var nameMap: HashMap<String, String> = HashMap()
-    fun setData(dataList: ArrayList<CommentBean>) {
+    fun setData(dataList: ArrayList<VideoCommentBean>) {
         if (commentsData == null) {
-            commentsData = CommentsBean()
+            commentsData = ArrayList()
         }
-        if (commentsData?.commentList == null) {
-            commentsData?.commentList = ArrayList()
-        }
-        commentsData?.commentList?.clear()
+        repeatData?.clear()
+        commentsData?.clear()
         nameMap.clear()
         dataList.forEach {
             if (nameMap.containsKey(it.member?.uname)) {
@@ -24,12 +21,14 @@ object CommentDataHelper {
                 }
                 repeatData?.add(it)
             } else {
-                commentsData?.commentList?.add(it)
+                commentsData?.add(it)
+                if (it.member?.is_followed == 1) {
+                    commentsData?.add(it)
+                }
                 it.member?.uname?.let { name ->
                     nameMap.put(name, "")
                 }
             }
         }
     }
-
 }

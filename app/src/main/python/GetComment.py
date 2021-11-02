@@ -1,39 +1,40 @@
 from bilibili_api import comment, sync
+from java import jclass
 import json
 
 
-async def main():
+class CommentList:
+    JavaBean = jclass("com.aceli.bilibililuckdraw.bean.JsonBean")
+    infoJson = JavaBean()
+
+
+async def getComment(parameter):
     # 存储评论
     comments = []
     # 页码
     page = 1
     # 当前已获取数量
     count = 0
-    file_name = 'comment.json'
-
-    while True:
-        # 获取评论
-        c = await comment.get_comments(718610052, comment.ResourceType.VIDEO, page)
-        # 存储评论
-        comments.extend(c['replies'])
-        # 增加已获取数量
-        count += c['page']['size']
-        # 增加页码
-        page += 1
-
-        if count >= c['page']['count']:
-            # 当前已获取数量已达到评论总数，跳出循环
-            break
-    print(f"{{")
-    # 打印评论
-    for cmt in comments:
-        print(f"\"{cmt['member']['uname']}_{(cmt['content']['message'])}\",")
-    print(f"}}")
-    # 打印评论总数
-    print(f"\n\n共有 {count} 条评论（不含子评论）")
-
-    with open(file_name, 'w') as file_object:
-        json.dump(comments, file_object)
+    array = parameter.split(',')
+    for aid in array:  # 第二个实例
+        while True:
+            # 获取评论
+            c = await comment.get_comments(aid, comment.ResourceType.VIDEO, page)
+            # 存储评论
+            comments.extend(c['replies'])
+            # 增加已获取数量
+            count += c['page']['size']
+            # 增加页码
+            page += 1
+            if count >= c['page']['count']:
+                # 当前已获取数量已达到评论总数，跳出循环
+                break
+    CommentList.infoJson.setJsonData(json.dumps(comments))
 
 
-sync(main())
+def getJson():
+    return CommentList.infoJson
+
+
+def init(parameter):
+    sync(getComment(parameter))

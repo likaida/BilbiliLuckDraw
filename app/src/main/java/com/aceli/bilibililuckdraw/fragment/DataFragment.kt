@@ -17,7 +17,7 @@ import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import java.util.ArrayList
 
-class DataFragment : Fragment() {
+class DataFragment : Fragment(), DataManagerFragment.OnChangeTabListener {
     private lateinit var binding: FragmentDataBinding
     private lateinit var mActivity: Activity
     private var mFragments = mutableListOf<Fragment>()
@@ -47,7 +47,9 @@ class DataFragment : Fragment() {
 
     private fun initView() {
         mFragments.add(VideoListFragment())
-        mFragments.add(DataManagerFragment())
+        val dataManagerFragment = DataManagerFragment.getInstance()
+        dataManagerFragment.mCnChangeTabListener = this
+        mFragments.add(dataManagerFragment)
         mFragments.add(VideoListFragment())
         mPagerAdapter = SimplePagerAdapter(
             childFragmentManager,
@@ -85,6 +87,10 @@ class DataFragment : Fragment() {
             override fun onPageScrollStateChanged(state: Int) {}
         })
 
+    }
+
+    override fun onChangeTab(pos: Int) {
+        binding.viewpager.currentItem = pos
     }
 
 
