@@ -15,7 +15,7 @@ object CommentDataHelper {
         commentsData?.clear()
         nameMap.clear()
         dataList.forEach {
-            if (nameMap.containsKey(it.member?.uname)) {
+            if (nameMap.containsKey(it.member?.uname) && nameMap[it.member?.uname] != it.oid.toString()) {
                 if (repeatData == null) {
                     repeatData = ArrayList()
                 }
@@ -26,7 +26,7 @@ object CommentDataHelper {
                     commentsData?.add(it)
                 }
                 it.member?.uname?.let { name ->
-                    nameMap.put(name, "")
+                    nameMap.put(name, it.oid.toString())
                 }
             }
         }
