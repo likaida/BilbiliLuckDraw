@@ -10,13 +10,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.aceli.bilibililuckdraw.helper.CommentDataHelper
 import com.aceli.bilibililuckdraw.R
 import com.aceli.bilibililuckdraw.bean.JsonBean
-import com.aceli.bilibililuckdraw.bean.VideoCommentBean
-import com.aceli.bilibililuckdraw.cell.CellCommentFromNetItemViewBinder
+import com.aceli.bilibililuckdraw.bean.beans.BarrageBean
+import com.aceli.bilibililuckdraw.cell.CellBarrageItemViewBinder
 import com.aceli.bilibililuckdraw.database.entity.VideoInfoEntity
-import com.aceli.bilibililuckdraw.databinding.FragmentDataManagerBinding
+import com.aceli.bilibililuckdraw.databinding.FragmentBarrageBinding
 import com.aceli.bilibililuckdraw.helper.GsonHelper
 import com.aceli.bilibililuckdraw.helper.VideoDataManager
 import com.aceli.bilibililuckdraw.widget.multitype.MultiTypeAdapter
@@ -28,8 +27,8 @@ import com.gyf.immersionbar.ImmersionBar
 import java.lang.Exception
 
 
-class DataManagerFragment : Fragment() {
-    private lateinit var binding: FragmentDataManagerBinding
+class BarrageFragment : Fragment() {
+    private lateinit var binding: FragmentBarrageBinding
     private lateinit var mActivity: Activity
     private var mData: MutableList<Any>? = ArrayList()
     private var mAdapter: MultiTypeAdapter? = MultiTypeAdapter()
@@ -42,7 +41,7 @@ class DataManagerFragment : Fragment() {
     ): View {
         ImmersionBar.with(this).statusBarDarkFont(true).init()
         binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_data_manager, container, false)
+            DataBindingUtil.inflate(inflater, R.layout.fragment_barrage, container, false)
         return binding.root
     }
 
@@ -65,7 +64,7 @@ class DataManagerFragment : Fragment() {
     private fun initView() {
         binding.mRecyclerView.layoutManager =
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        mAdapter?.register(CellCommentFromNetItemViewBinder())
+        mAdapter?.register(CellBarrageItemViewBinder())
         (binding.mRecyclerView.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
         binding.mRecyclerView.adapter = mAdapter
         mAdapter?.items = mData!!
@@ -79,75 +78,69 @@ class DataManagerFragment : Fragment() {
 
     private fun createData() {
         binding.mLoading.start()
-        mVideoList = VideoDataManager.getAllVideo() as ArrayList<VideoInfoEntity>?
-        if (mVideoList?.isNullOrEmpty() == true) {
-            Toasty.show("Please Add Video")
-            mCnChangeTabListener?.onChangeTab(0)
-            return
-        }
-        var idList = ""
-        mVideoList?.forEach { video ->
-            video.aid?.let {
-                idList = if (idList.isEmpty()) {
-                    "$it"
-                } else {
-                    "$idList,$it"
+        try {
+            mVideoList = VideoDataManager.getAllVideo() as ArrayList<VideoInfoEntity>?
+            if (mVideoList?.isNullOrEmpty() == true) {
+                Toasty.show("Please Add Video")
+                mCnChangeTabListener?.onChangeTab(0)
+                return
+            }
+            Toasty.info(
+                mActivity,
+                "Please waiting for request data"
+            ).show()
+            var idList = ""
+            mVideoList?.forEach { video ->
+                video.bvid?.let {
+                    idList = if (idList.isEmpty()) {
+                        "$it"
+                    } else {
+                        "$idList,$it"
+                    }
                 }
             }
-        }
-        val py: Python = Python.getInstance()
-        py.getModule("GetComment").callAttr("init", idList)
-        val pyObjectVideoInfo: PyObject = py.getModule("GetComment").callAttr("getJson")
-        val jsonBean: JsonBean = pyObjectVideoInfo.toJava(
-            JsonBean::class.java
-        )
-        var commentBean: ArrayList<VideoCommentBean>? = null
-        try {
-            commentBean = GsonHelper.instance.gson.fromJson(
-                jsonBean.jsonData,
-                object : TypeToken<ArrayList<VideoCommentBean>>() {}.type
-            ) as ArrayList<VideoCommentBean>
+            val py: Python = Python.getInstance()
+            py.getModule("GetDanmu").callAttr("init", idList)
+            val pyObjectVideoInfo: PyObject = py.getModule("GetDanmu").callAttr("getJson")
+            val jsonBean: JsonBean = pyObjectVideoInfo.toJava(
+                JsonBean::class.java
+            )
+            var commentBean: BarrageBean? = null
+            try {
+                commentBean = GsonHelper.instance.gson.fromJson(
+                    jsonBean.jsonData,
+                    object : TypeToken<BarrageBean>() {}.type
+                ) as BarrageBean
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            binding.mLoading.stop()
+            if (!commentBean?.barrageList.isNullOrEmpty()) {
+                mData?.addAll(commentBean?.barrageList!!)
+                Toasty.success(
+                    mActivity,
+                    "Data was create by net"
+                ).show()
+                mAdapter?.notifyDataSetChanged()
+            } else {
+                Toasty.error(
+                    mActivity,
+                    "Data was create error"
+                ).show()
+            }
         } catch (e: Exception) {
             e.printStackTrace()
-        }
-        binding.mLoading.stop()
-        if (!commentBean.isNullOrEmpty()){
-            CommentDataHelper.setData(commentBean)
-            Toasty.success(
-                mActivity,
-                "Data was create by net"
-            ).show()
-            injectData()
-        }else{
             Toasty.error(
                 mActivity,
                 "Data was create error"
             ).show()
-        }
-    }
-
-    private fun injectData() {
-        if (CommentDataHelper.commentsData?.isNullOrEmpty() == false) {
-            mData?.clear()
-            CommentDataHelper.commentsData?.let {
-                mData?.addAll(it)
-            }
-            binding.mRepeatNum.text = CommentDataHelper.repeatData?.size?.toString() ?: "0"
-            binding.mSuccessNum.text =
-                CommentDataHelper.commentsData?.size?.toString() ?: "0"
-            mAdapter?.notifyDataSetChanged()
-        } else {
-            Toasty.error(
-                mActivity,
-                "Please create data before inject"
-            ).show()
-            return
+            binding.mLoading.stop()
         }
     }
 
     companion object {
-        fun getInstance(): DataManagerFragment {
-            return DataManagerFragment()
+        fun getInstance(): BarrageFragment {
+            return BarrageFragment()
         }
     }
 

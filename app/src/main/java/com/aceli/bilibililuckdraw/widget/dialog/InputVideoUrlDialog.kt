@@ -10,13 +10,12 @@ import android.view.Gravity
 import android.view.KeyEvent
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatDialog
 import com.aceli.bilibililuckdraw.R
 import com.aceli.bilibililuckdraw.util.Utils.getColor
 import com.aceli.bilibililuckdraw.widget.toasty.Toasty
+import com.google.android.material.switchmaterial.SwitchMaterial
 import timber.log.Timber
 
 
@@ -28,8 +27,10 @@ class InputVideoUrlDialog(private val mContext: Context, theme: Int) : AppCompat
     private var mDialogContentView: LinearLayout? = null
     private var mEditView: EditText? = null
     private var mSubmitBtn: TextView? = null
-    private var mTestBtn: TextView? = null
+    private var mSwitchType: TextView? = null
+    private var mSwitchTypeBtn: SwitchMaterial? = null
     private var mLastDiff = 0
+    private var mIsUrlType = true
     private var testUrl =
         "https://www.bilibili.com/video/BV11L4y1B7a6?spm_id_from=333.999.0.0"
 
@@ -38,7 +39,8 @@ class InputVideoUrlDialog(private val mContext: Context, theme: Int) : AppCompat
         mEditView = findViewById(R.id.et_input_message)
         mDialogContentView = findViewById(R.id.mContentView)
         mSubmitBtn = findViewById(R.id.confirm_btn)
-        mTestBtn = findViewById(R.id.mTestBtn)
+        mSwitchType = findViewById(R.id.mUrlType)
+        mSwitchTypeBtn = findViewById(R.id.mSwitchUrlType)
         imm = mContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     }
 
@@ -86,8 +88,15 @@ class InputVideoUrlDialog(private val mContext: Context, theme: Int) : AppCompat
         mSubmitBtn?.setOnClickListener {
             submit()
         }
-        mTestBtn?.setOnClickListener {
-            mEditView?.setText(testUrl)
+        mSwitchTypeBtn?.setOnCheckedChangeListener { buttonView, isChecked ->
+            mIsUrlType = !isChecked
+            if (isChecked) {
+                mSwitchType?.text = "Is vid"
+                mEditView?.hint = "Input Vid Like XXXXX"
+            } else {
+                mSwitchType?.text = "Is url"
+                mEditView?.hint = "Input Url Like https://www.B.com/video/X"
+            }
         }
         mDialogContentView?.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
             val r = Rect()
@@ -149,14 +158,18 @@ class InputVideoUrlDialog(private val mContext: Context, theme: Int) : AppCompat
         if (text.isNullOrEmpty()) {
             Toasty.error(mContext, "Please input video url").show()
         } else {
-            if (text.contains("bilibil")) {
-                val split = text.split("?")
-                if (split.isNotEmpty()) {
-                    val split1 = split[0].split("/")
-                    if (split1.isNotEmpty()) {
-                        dismiss()
-                        mOnTextSendListener?.onTextSend(split1[split1.size - 1])
-                        mEditView?.setText("")
+            if (mIsUrlType) {
+                if (text.contains("bilibil")) {
+                    val split = text.split("?")
+                    if (split.isNotEmpty()) {
+                        val split1 = split[0].split("/")
+                        if (split1.isNotEmpty()) {
+                            dismiss()
+                            mOnTextSendListener?.onTextSend(split1[split1.size - 1])
+                            mEditView?.setText("")
+                        } else {
+                            showError()
+                        }
                     } else {
                         showError()
                     }
@@ -164,7 +177,9 @@ class InputVideoUrlDialog(private val mContext: Context, theme: Int) : AppCompat
                     showError()
                 }
             } else {
-                showError()
+                dismiss()
+                mOnTextSendListener?.onTextSend(text.toString())
+                mEditView?.setText("")
             }
         }
     }

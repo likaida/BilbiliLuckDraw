@@ -58,6 +58,7 @@ class VideoListFragment : Fragment(), OnItemMultiClickListener {
         mAdapter?.items = mData!!
         val allVideo = VideoDataManager.getAllVideo()
         allVideo?.let {
+            mData?.clear()
             mData?.addAll(it)
             mAdapter?.notifyItemRangeInserted(0, it.size - 1)
         }

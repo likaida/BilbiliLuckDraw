@@ -32,32 +32,39 @@ object VideoDataManager {
     }
 
     fun addVideoById(vid: String, callback: OnAddVideoCallback? = null) {
-        val py: Python = Python.getInstance()
-        py.getModule("GetVideoInfo").callAttr("init", vid)
-        val pyObjectVideoInfo: PyObject = py.getModule("GetVideoInfo").callAttr("getJson")
-        val info: JsonBean = pyObjectVideoInfo.toJava(
-            JsonBean::class.java
-        )
-        val aid = info.jsonData
-        var infoBean: VideoInfoEntity? = null
         try {
-            infoBean = GsonHelper.instance.gson.fromJson(
-                info.jsonData,
-                object : TypeToken<VideoInfoEntity>() {}.type
-            ) as VideoInfoEntity
+            val py: Python = Python.getInstance()
+            py.getModule("GetVideoInfo").callAttr("init", vid)
+            val pyObjectVideoInfo: PyObject = py.getModule("GetVideoInfo").callAttr("getJson")
+            val info: JsonBean = pyObjectVideoInfo.toJava(
+                JsonBean::class.java
+            )
+            val aid = info.jsonData
+            var infoBean: VideoInfoEntity? = null
+            try {
+                infoBean = GsonHelper.instance.gson.fromJson(
+                    info.jsonData,
+                    object : TypeToken<VideoInfoEntity>() {}.type
+                ) as VideoInfoEntity
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            if (infoBean != null) {
+                infoBean.updateTime = Date().time
+                addVideo(infoBean)
+                callback?.onAddVideoSuccess(infoBean)
+                Toasty.success(LuckDrawApplication.mApp, "Add Video ${infoBean.title} Success")
+                    .show()
+            } else {
+                callback?.onAddVideoFail()
+                Toasty.error(LuckDrawApplication.mApp, "Add Video $vid error").show()
+            }
+            Timber.d("python_likaida:aid->$aid")
         } catch (e: Exception) {
             e.printStackTrace()
-        }
-        if (infoBean != null) {
-            infoBean.updateTime = Date().time
-            addVideo(infoBean)
-            callback?.onAddVideoSuccess(infoBean)
-            Toasty.success(LuckDrawApplication.mApp, "Add Video ${infoBean.title} Success").show()
-        } else {
-            callback?.onAddVideoFail()
             Toasty.error(LuckDrawApplication.mApp, "Add Video $vid error").show()
         }
-        Timber.d("python_likaida:aid->$aid")
+
     }
 
     fun deleteVideoById(vid: String, callback: OnDeleteVideoCallback? = null) {

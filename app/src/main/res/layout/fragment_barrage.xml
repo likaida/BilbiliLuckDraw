@@ -37,35 +37,6 @@
                 android:textColor="@color/color_222"
                 app:drawableTopCompat="@mipmap/round_assignment_black_24" />
 
-            <LinearLayout
-                android:id="@+id/mRepeatComment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="18dp"
-                android:background="@drawable/shape_tv_bg"
-                android:elevation="3dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="5dp">
-
-                <TextView
-                    android:id="@+id/mSuccessNum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textColor="#4CAF50" />
-
-                <TextView
-                    android:id="@+id/mRepeatNum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textColor="#FF5722" />
-
-            </LinearLayout>
-
         </RelativeLayout>
 
         <com.victor.loading.rotate.RotateLoading
