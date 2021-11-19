@@ -68,7 +68,7 @@ class LuckDrawFragment : Fragment() {
     private fun startLuck() {
         if (CommentDataHelper.commentsData?.isNullOrEmpty() == false) {
             Toasty.info(mActivity, "Come on .....").show()
-            binding.mStartLuck.text = "Stop"
+            binding.mStartLuck.text = Utils.getString(R.string.string_start)
             isLooping = true
             startLoop()
         } else {
@@ -76,15 +76,13 @@ class LuckDrawFragment : Fragment() {
         }
     }
 
-    var num = 0
     private fun startLoop() {
         val size = CommentDataHelper.commentsData?.size ?: 0
-        var get: VideoCommentBean? = null
+        val get: VideoCommentBean?
         val nextInt = Random.nextInt(size)
         get = CommentDataHelper.commentsData?.get(nextInt)
-        
         refreshUi(get)
-        mHandler.postDelayed(mRunnable, 50)
+        mHandler.postDelayed(mRunnable, 30)
     }
 
     private fun refreshUi(item: VideoCommentBean?) {
@@ -95,26 +93,32 @@ class LuckDrawFragment : Fragment() {
             binding.mUserName.text = it?.member?.uname
             binding.mContent.text = it?.content?.message
             binding.mIcon.setImageURI(it?.member?.avatar)
-            if (it?.member?.sex == "男") {
-                binding.mSex.visible()
-                binding.mSex.setImageResource(R.mipmap.ic_man)
-            } else if (it?.member?.sex == "女") {
-                binding.mSex.visible()
-                binding.mSex.setImageResource(R.mipmap.ic_woman)
-            } else {
-                binding.mSex.gone()
+            when (it?.member?.sex) {
+                "男" -> {
+                    binding.mSex.visible()
+                    binding.mSex.setImageResource(R.mipmap.ic_man)
+                }
+                "女" -> {
+                    binding.mSex.visible()
+                    binding.mSex.setImageResource(R.mipmap.ic_woman)
+                }
+                else -> {
+                    binding.mSex.gone()
+                }
             }
-            binding.mDrawnNumSize.text = " : $size"
+            val des = " : $size"
+            binding.mDrawnNumSize.text = des
             binding.mCreateTime.text = Utils.convertTimeStampForCreateTime((it?.ctime ?: 0) * 1000)
         }
     }
 
+    private var num = 0
     private fun stopLoop() {
-        binding.mStartLuck.text = "Start"
+        binding.mStartLuck.text = Utils.getString(R.string.string_stop)
         mHandler.removeCallbacks(mRunnable)
+        isLooping = false
         binding.mContentView.visible()
         binding.mDrawnNumContent.gone()
-        isLooping = false
     }
 
     private var mRunnable = Runnable {

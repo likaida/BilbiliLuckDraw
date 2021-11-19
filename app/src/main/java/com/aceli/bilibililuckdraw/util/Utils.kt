@@ -120,6 +120,10 @@ object Utils {
         return LuckDrawApplication.mApp.resources.getColor(id)
     }
 
+    fun getString(id: Int): String {
+        return LuckDrawApplication.mApp.resources.getString(id)
+    }
+
     fun tintDrawable(drawable: Drawable, colors: ColorStateList): Drawable {
         val wrappedDrawable = DrawableCompat.wrap(drawable)
         DrawableCompat.setTintList(wrappedDrawable, colors)
