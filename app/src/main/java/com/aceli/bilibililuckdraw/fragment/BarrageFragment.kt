@@ -34,7 +34,7 @@ class BarrageFragment : Fragment(), OnItemMultiClickListener {
     private lateinit var mActivity: Activity
     private var mData: MutableList<Any>? = ArrayList()
     private var mAdapter: MultiTypeAdapter? = MultiTypeAdapter()
-    var mCnChangeTabListener: OnChangeTabListener? = null
+    private var mCnChangeTabListener: OnChangeTabListener? = null
     private var mVideoList: ArrayList<VideoInfoEntity>? = ArrayList()
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -93,9 +93,9 @@ class BarrageFragment : Fragment(), OnItemMultiClickListener {
             ).show()
             var idList = ""
             mVideoList?.forEach { video ->
-                video.bvid?.let {
+                video.bvid.let {
                     idList = if (idList.isEmpty()) {
-                        "$it"
+                        it
                     } else {
                         "$idList,$it"
                     }
@@ -119,6 +119,7 @@ class BarrageFragment : Fragment(), OnItemMultiClickListener {
             binding.mLoading.stop()
             if (!commentBean?.barrageList.isNullOrEmpty()) {
                 mData?.addAll(commentBean?.barrageList!!)
+                binding.mBarrageNum.text = (mData?.size ?: 0).toString()
                 Toasty.success(
                     mActivity,
                     "Data was create by net"

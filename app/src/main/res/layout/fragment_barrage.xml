@@ -39,6 +39,28 @@
 
         </RelativeLayout>
 
+        <LinearLayout
+            android:id="@+id/mBarrageLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="18dp"
+            android:background="@drawable/shape_tv_bg"
+            android:elevation="3dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/mBarrageNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="#4CAF50" />
+
+        </LinearLayout>
+
         <com.victor.loading.rotate.RotateLoading
             android:id="@+id/mLoading"
             android:layout_width="80dp"
