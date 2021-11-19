@@ -7,9 +7,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.aceli.bilibililuckdraw.R
+import com.aceli.bilibililuckdraw.const.ClickConst
 import com.aceli.bilibililuckdraw.widget.multitype.ItemViewBinder
+import com.aceli.bilibililuckdraw.widget.multitype.OnItemMultiClickListener
 
-class CellBarrageItemViewBinder :
+class CellBarrageItemViewBinder(var listener: OnItemMultiClickListener?) :
     ItemViewBinder<String, CellBarrageItemViewBinder.ViewHolder>() {
 
     override fun onViewAttachedToWindow(holder: ViewHolder) {
@@ -28,6 +30,13 @@ class CellBarrageItemViewBinder :
     override fun onBindViewHolder(holder: ViewHolder, item: String) {
         item.let { data ->
             holder.mContent.text = data
+            holder.itemView.setOnClickListener {
+                listener?.onBaseItemMultiClick(
+                    ClickConst.CLICK_ACTION_BARRAGE_NUM,
+                    holder.adapterPosition,
+                    item
+                )
+            }
         }
     }
 

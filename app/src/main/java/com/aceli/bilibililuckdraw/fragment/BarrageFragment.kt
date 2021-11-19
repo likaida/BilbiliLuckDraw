@@ -14,11 +14,13 @@ import com.aceli.bilibililuckdraw.R
 import com.aceli.bilibililuckdraw.bean.JsonBean
 import com.aceli.bilibililuckdraw.bean.beans.BarrageBean
 import com.aceli.bilibililuckdraw.cell.CellBarrageItemViewBinder
+import com.aceli.bilibililuckdraw.const.ClickConst
 import com.aceli.bilibililuckdraw.database.entity.VideoInfoEntity
 import com.aceli.bilibililuckdraw.databinding.FragmentBarrageBinding
 import com.aceli.bilibililuckdraw.helper.GsonHelper
 import com.aceli.bilibililuckdraw.helper.VideoDataManager
 import com.aceli.bilibililuckdraw.widget.multitype.MultiTypeAdapter
+import com.aceli.bilibililuckdraw.widget.multitype.OnItemMultiClickListener
 import com.aceli.bilibililuckdraw.widget.toasty.Toasty
 import com.chaquo.python.PyObject
 import com.chaquo.python.Python
@@ -27,7 +29,7 @@ import com.gyf.immersionbar.ImmersionBar
 import java.lang.Exception
 
 
-class BarrageFragment : Fragment() {
+class BarrageFragment : Fragment(), OnItemMultiClickListener {
     private lateinit var binding: FragmentBarrageBinding
     private lateinit var mActivity: Activity
     private var mData: MutableList<Any>? = ArrayList()
@@ -64,7 +66,7 @@ class BarrageFragment : Fragment() {
     private fun initView() {
         binding.mRecyclerView.layoutManager =
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        mAdapter?.register(CellBarrageItemViewBinder())
+        mAdapter?.register(CellBarrageItemViewBinder(this))
         (binding.mRecyclerView.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
         binding.mRecyclerView.adapter = mAdapter
         mAdapter?.items = mData!!
@@ -146,5 +148,17 @@ class BarrageFragment : Fragment() {
 
     interface OnChangeTabListener {
         fun onChangeTab(pos: Int)
+    }
+
+    override fun onBaseItemMultiClick(actionType: Int, pos: Int, ext: Any?) {
+        if (actionType == ClickConst.CLICK_ACTION_BARRAGE_NUM) {
+            var num = 0
+            mData?.forEach {
+                if (it is String && ext is String && ext == it) {
+                    num++
+                }
+            }
+            Toasty.show("Barrage $ext num is $num")
+        }
     }
 }
