@@ -30,12 +30,13 @@ class CellBarrageItemViewBinder(var listener: OnItemMultiClickListener?) :
     override fun onBindViewHolder(holder: ViewHolder, item: String) {
         item.let { data ->
             holder.mContent.text = data
-            holder.itemView.setOnClickListener {
+            holder.itemView.setOnLongClickListener {
                 listener?.onBaseItemMultiClick(
                     ClickConst.CLICK_ACTION_BARRAGE_NUM,
                     holder.adapterPosition,
                     item
                 )
+                false
             }
         }
     }

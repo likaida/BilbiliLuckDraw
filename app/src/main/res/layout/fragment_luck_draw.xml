@@ -48,7 +48,9 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:visibility="visible"
-                    app:roundAsCircle="true" />
+                    app:roundAsCircle="true"
+                    app:roundingBorderColor="@color/color_000000_alpha5"
+                    app:roundingBorderWidth="1px" />
 
                 <ImageView
                     android:id="@+id/mSex"
