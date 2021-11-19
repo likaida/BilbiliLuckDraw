@@ -20,6 +20,7 @@ import com.aceli.bilibililuckdraw.widget.dialog.InputVideoUrlDialog
 import com.aceli.bilibililuckdraw.widget.dialog.InputVideoUrlDialog.OnTextSendListener
 import com.aceli.bilibililuckdraw.widget.multitype.MultiTypeAdapter
 import com.aceli.bilibililuckdraw.widget.multitype.OnItemMultiClickListener
+import kotlin.Exception
 
 
 class VideoListFragment : Fragment(), OnItemMultiClickListener {
@@ -85,31 +86,39 @@ class VideoListFragment : Fragment(), OnItemMultiClickListener {
     }
 
     private fun refreshOrAddVideo(videoInfo: VideoInfoEntity) {
-        mData?.forEachIndexed { index, video ->
-            if (video is VideoInfoEntity && video.aid == videoInfo.aid) {
-                mData?.set(index, videoInfo)
-                mAdapter?.notifyItemChanged(index)
-                return
+        try {
+            mData?.forEachIndexed { index, video ->
+                if (video is VideoInfoEntity && video.aid == videoInfo.aid) {
+                    mData?.set(index, videoInfo)
+                    mAdapter?.notifyItemChanged(index)
+                    return
+                }
             }
+            mData?.add(videoInfo)
+            mAdapter?.notifyItemInserted(mData?.size ?: 0)
+        }catch (e:Exception){
+            e.printStackTrace()
         }
-        mData?.add(videoInfo)
-        mAdapter?.notifyItemInserted(mData?.size ?: 0)
     }
 
     override fun onBaseItemMultiClick(actionType: Int, pos: Int, ext: Any?) {
         when (actionType) {
             ClickConst.CLICK_ACTION_VIDEO_REFRESH -> {
                 if (ext is String) {
-                    VideoDataManager.addVideoById(
-                        ext,
-                        object : VideoDataManager.OnAddVideoCallback {
-                            override fun onAddVideoSuccess(videoInfo: VideoInfoEntity) {
-                                refreshOrAddVideo(videoInfo)
-                            }
+                    try {
+                        VideoDataManager.addVideoById(
+                            ext,
+                            object : VideoDataManager.OnAddVideoCallback {
+                                override fun onAddVideoSuccess(videoInfo: VideoInfoEntity) {
+                                    refreshOrAddVideo(videoInfo)
+                                }
 
-                            override fun onAddVideoFail() {
-                            }
-                        })
+                                override fun onAddVideoFail() {
+                                }
+                            })
+                    }catch (e:Exception){
+                        e.printStackTrace()
+                    }
                 }
             }
             ClickConst.CLICK_ACTION_VIDEO_DELETE -> {
