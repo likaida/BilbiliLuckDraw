@@ -129,4 +129,17 @@ object Utils {
         DrawableCompat.setTintList(wrappedDrawable, colors)
         return wrappedDrawable
     }
+
+    private var lastClickTime: Long = 0
+
+    fun isCheckExit(): Boolean {
+        val time = System.currentTimeMillis()
+        val timeD: Long = time - lastClickTime
+        if (timeD > 0 && timeD < 1000) {
+            return true
+        }
+        lastClickTime = time
+        return false
+    }
+
 }

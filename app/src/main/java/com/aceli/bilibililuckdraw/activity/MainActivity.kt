@@ -13,6 +13,7 @@ import com.aceli.bilibililuckdraw.util.Utils
 import com.aceli.bilibililuckdraw.databinding.ActivityMainBinding
 import com.aceli.bilibililuckdraw.fragment.DataFragment
 import com.aceli.bilibililuckdraw.fragment.SettingFragment
+import com.aceli.bilibililuckdraw.widget.toasty.Toasty
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import com.gyf.immersionbar.ImmersionBar
@@ -74,5 +75,13 @@ class MainActivity : AppCompatActivity() {
 
             override fun onPageScrollStateChanged(state: Int) {}
         })
+    }
+
+    override fun onBackPressed() {
+        if (Utils.isCheckExit()) {
+            finish()
+        } else {
+            Toasty.show("Make sure to exit?")
+        }
     }
 }
