@@ -11,12 +11,12 @@ class CommentList:
 async def getComment(parameter):
     # 存储评论
     comments = []
-    # 页码
-    page = 1
-    # 当前已获取数量
-    count = 0
     array = parameter.split(',')
     for aid in array:  # 第二个实例
+        # 页码
+        page = 1
+        # 当前已获取数量
+        count = 0
         while True:
             # 获取评论
             c = await comment.get_comments(aid, comment.ResourceType.VIDEO, page)

@@ -12,7 +12,9 @@
         android:id="@+id/mUserIcon"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        app:roundAsCircle="true" />
+        app:roundAsCircle="true"
+        app:roundingBorderWidth="1px"
+        app:roundingBorderColor="@color/color_000000_alpha5"/>
 
     <TextView
         android:id="@+id/mUserName"
