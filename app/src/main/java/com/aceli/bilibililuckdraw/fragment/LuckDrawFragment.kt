@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.aceli.bilibililuckdraw.R
+import com.aceli.bilibililuckdraw.bean.VideoCommentBean
 import com.aceli.bilibililuckdraw.databinding.FragmentLuckDrawBinding
 import com.aceli.bilibililuckdraw.helper.CommentDataHelper
 import com.aceli.bilibililuckdraw.util.Utils
@@ -75,13 +76,22 @@ class LuckDrawFragment : Fragment() {
         }
     }
 
+    var num = 0
     private fun startLoop() {
         val size = CommentDataHelper.commentsData?.size ?: 0
+        var get: VideoCommentBean? = null
         val nextInt = Random.nextInt(size)
-        val get = CommentDataHelper.commentsData?.get(nextInt)
+        get = CommentDataHelper.commentsData?.get(nextInt)
+        
+        refreshUi(get)
+        mHandler.postDelayed(mRunnable, 50)
+    }
+
+    private fun refreshUi(item: VideoCommentBean?) {
+        val size = CommentDataHelper.commentsData?.size ?: 0
         binding.mContentView.gone()
         binding.mDrawnNumContent.visible()
-        get.let {
+        item.let {
             binding.mUserName.text = it?.member?.uname
             binding.mContent.text = it?.content?.message
             binding.mIcon.setImageURI(it?.member?.avatar)
@@ -97,7 +107,6 @@ class LuckDrawFragment : Fragment() {
             binding.mDrawnNumSize.text = " : $size"
             binding.mCreateTime.text = Utils.convertTimeStampForCreateTime((it?.ctime ?: 0) * 1000)
         }
-        mHandler.postDelayed(mRunnable, 50)
     }
 
     private fun stopLoop() {
